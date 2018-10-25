@@ -17,4 +17,8 @@ export const search = () => {
 
 export const add = (descricao) => {
     const request = axios.post(URL, { descricao });
+    return {
+        type: 'TODO_ADDED',
+        payload: request
+    }
 }
