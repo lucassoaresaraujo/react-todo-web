@@ -9,9 +9,9 @@ export default (state = INITIAL_STATE, action) => {
         case 'DESCRICAO_CHANGED':
             return {...state, descricao: action.payload};
         case 'TODO_SEARCHED':
-            return {...state, list: action.payload.data.content}
-        case 'TODO_ADDED':
-            return {...state, descricao: ''}
+            return {...state, list: action.payload.data.content}    
+        case 'TODO_CLEAR':
+            return {...state, descricao: '', erros: []}
         default:
             return state;
     }

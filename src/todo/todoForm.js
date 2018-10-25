@@ -6,7 +6,7 @@ import Grid from '../template/grid';
 import IconButton from '../template/iconButton';
 import If from '../template/if';
 import ErrorMessage from '../template/ErrorMessage';
-import {add, changeDescricao, search} from './todoActions';
+import {add, changeDescricao, search, clear} from './todoActions';
 
 class TodoForm extends Component {
 
@@ -15,16 +15,16 @@ class TodoForm extends Component {
     }
 
     keyHandler = e => {
-        const {add, search, descricao} = this.props;
+        const {add, search, descricao, clear} = this.props;
         if (e.key ==='Enter'){
             e.shiftKey ? search() : add(descricao);
         } else if (e.key === 'Escape') {
-            this.props.handleClear();
+            clear();
         } 
     }
 
     render(){
-        const {add, search, descricao, changeDescricao} = this.props;
+        const {add, clear, search, descricao, changeDescricao} = this.props;
         return (        
             <div>
                 <div role='form' className='todoForm'>
@@ -61,7 +61,7 @@ class TodoForm extends Component {
                         <IconButton
                             type='default'
                             icon='close'
-                            onClick={this.props.handleClear} />    
+                            onClick={clear} />    
                     </Grid>
                     
                 </div>
@@ -78,6 +78,6 @@ const mapsStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => 
-    bindActionCreators({add, changeDescricao, search}, dispatch);
+    bindActionCreators({add, clear, changeDescricao, search}, dispatch);
 
 export default connect(mapsStateToProps, mapDispatchToProps)(TodoForm);
