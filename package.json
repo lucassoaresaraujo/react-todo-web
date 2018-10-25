@@ -25,7 +25,11 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "ajv": "^6.5.4",
     "bootstrap": "^3.3.7",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.1",
+    "redux-promise": "^0.5.3"
   }
 }

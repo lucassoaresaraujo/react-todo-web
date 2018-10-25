@@ -9,7 +9,7 @@ export default props => {
     };
     return (  
         <If test={erros.length > 0}>
-            <div class="alert alert-danger" role="alert">
+            <div className="alert alert-danger" role="alert">
                 <p>
                     <strong>Quase lá! Reveja alguns itens...</strong>
                 </p>
