@@ -14,3 +14,7 @@ export const search = () => {
         payload: request
     }
 }
+
+export const add = (descricao) => {
+    const request = axios.post(URL, { descricao });
+}

@@ -6,7 +6,7 @@ import Grid from '../template/grid';
 import IconButton from '../template/iconButton';
 import If from '../template/if';
 import ErrorMessage from '../template/ErrorMessage';
-import {changeDescricao, search} from './todoActions';
+import {add, changeDescricao, search} from './todoActions';
 
 class TodoForm extends Component {
 
@@ -15,31 +15,33 @@ class TodoForm extends Component {
     }
 
     keyHandler = e => {
+        const {add, search, descricao} = this.props;
         if (e.key ==='Enter'){
-            e.shiftKey ? this.props.handleSearch() : this.props.handleAdd();
+            e.shiftKey ? search() : add(descricao);
         } else if (e.key === 'Escape') {
             this.props.handleClear();
         } 
     }
 
     render(){
+        const {add, search, descricao, changeDescricao} = this.props;
         return (        
             <div>
                 <div role='form' className='todoForm'>
                     <p>
                         <strong>Nova tarefa: </strong>
-                        <If test={this.props.descricao===""}>
+                        <If test={descricao===""}>
                             <em>adicione o nome da atividade</em>
                         </If>    
-                        {this.props.descricao}
+                        {descricao}
                     </p>
                     <Grid cols='8 9 10'>
                         <input id='descricao' 
                             type="text"
                             autoComplete='off' 
                             className='form-control'
-                            value={this.props.descricao}
-                            onChange={this.props.changeDescricao}
+                            value={descricao}
+                            onChange={changeDescricao}
                             onKeyUp={this.keyHandler}
                             onFocus={this.props.handleClearErros}
                             placeholder='Adicione uma tarefa'/>
@@ -49,12 +51,12 @@ class TodoForm extends Component {
                         <IconButton 
                             type='primary' 
                             icon='plus'
-                            onClick={this.props.handleAdd} />    
+                            onClick={() => add(descricao)} />    
             
                         <IconButton
                             type='info'
                             icon='search'
-                            onClick={this.props.handleSearch} />
+                            onClick={search} />
             
                         <IconButton
                             type='default'
@@ -76,6 +78,6 @@ const mapsStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => 
-    bindActionCreators({changeDescricao, search}, dispatch);
+    bindActionCreators({add, changeDescricao, search}, dispatch);
 
 export default connect(mapsStateToProps, mapDispatchToProps)(TodoForm);
