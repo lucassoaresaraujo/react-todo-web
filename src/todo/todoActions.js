@@ -7,18 +7,28 @@ export const changeDescricao = event => ({
     payload: event.target.value
 });
 
-export const search = () => {
-    const request = axios.get(`${URL}?sort=createdAt,desc`);        
-    return {
-        type: 'TODO_SEARCHED',
-        payload: request
+export const search = (descricao = '') => {
+
+    return (dispatch, getState) => {
+        const descricao = getState().todo.descricao;
+        const request = axios.get(`${URL}?sort=createdAt,desc&descricao=${descricao}`)
+        .then(resp => dispatch({type: 'TODO_SEARCHED', payload: resp.data})) 
+
     }
+}
+
+export const showErros = (erros) => {
+    return [{
+        type: 'TODO_SHOW_ERROS',
+        payload: erros.response.data
+    }]
 }
 
 export const add = (descricao) => {
     return dispatch => {
         axios.post(URL, { descricao })
         .then(resp => dispatch(clear()))
+        .catch(erros => dispatch(showErros(erros)))
         .then(resp => dispatch(search()));    
     }    
 }
@@ -45,6 +55,10 @@ export const remove = todo => {
     }
 }
 
+// forma de usar o multi pra chamar duas ações sem promise
 export const clear = () => {
-    return {type: 'TODO_CLEAR'}
+    return [
+        {type: 'TODO_CLEAR'},
+        search()
+    ]
 }

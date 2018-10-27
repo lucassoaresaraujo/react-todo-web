@@ -17,6 +17,7 @@ class TodoForm extends Component {
     keyHandler = e => {
         const {add, search, descricao, clear} = this.props;
         if (e.key ==='Enter'){
+            console.log("Entrou");
             e.shiftKey ? search() : add(descricao);
         } else if (e.key === 'Escape') {
             clear();
@@ -43,7 +44,6 @@ class TodoForm extends Component {
                             value={descricao}
                             onChange={changeDescricao}
                             onKeyUp={this.keyHandler}
-                            onFocus={this.props.handleClearErros}
                             placeholder='Adicione uma tarefa'/>
                     </Grid>
                     
